@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Employees - ARU HRMS</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #222;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 240px;
+            background: #111827;
+            color: white;
+            padding: 25px 15px;
+            box-sizing: border-box;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h2 {
+            margin: 0;
+            font-size: 25px;
+        }
+
+        .logo span {
+            color: #60a5fa;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-menu a {
+            color: #d1d5db;
+            text-decoration: none;
+            padding: 13px 15px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .logout {
+            margin-top: 25px;
+            color: #f87171 !important;
+        }
+
+        /* Main */
+        .main {
+            flex: 1;
+            padding: 30px;
+            box-sizing: border-box;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            gap: 15px;
+        }
+
+        .top-bar h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .top-bar p {
+            margin-top: 6px;
+            color: #6b7280;
+        }
+
+        .add-btn {
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 13px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .add-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* Search */
+        .search-box {
+            background: white;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            box-sizing: border-box;
+            outline: none;
+            font-size: 15px;
+        }
+
+        .search-box input:focus {
+            border-color: #2563eb;
+        }
+
+        /* Table */
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            overflow-x: auto;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
+
+        th,
+        td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        th {
+            background: #f9fafb;
+            color: #374151;
+        }
+
+        td {
+            color: #4b5563;
+        }
+
+        .status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .active-status {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .inactive-status {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .action-btn {
+            border: none;
+            padding: 7px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 4px;
+        }
+
+        .view-btn {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .edit-btn {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .delete-btn {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.55);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 25px;
+            border-radius: 12px;
+            box-sizing: border-box;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+        }
+
+        .close {
+            font-size: 28px;
+            cursor: pointer;
+            color: #6b7280;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #374151;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #2563eb;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .save-btn {
+            width: 100%;
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 13px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .save-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+
+            .sidebar {
+                width: 190px;
+            }
+
+            .main {
+                padding: 18px;
+            }
+
+            .top-bar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 15px;
+            }
+
+            .logo {
+                margin-bottom: 15px;
+            }
+
+            .nav-menu {
+                flex-direction: row;
+                overflow-x: auto;
+            }
+
+            .nav-menu a {
+                white-space: nowrap;
+            }
+
+            .main {
+                padding: 15px;
+            }
+
+            .top-bar h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h2>ARU <span>HRMS</span></h2>
+        </div>
+
+        <nav class="nav-menu">
+
+            <a href="dashboard.html">📊 Dashboard</a>
+
+            <a href="employees.html" class="active">
+                👥 Employees
+            </a>
+
+            <a href="profile.html">
+                👤 Profile
+            </a>
+
+            <a href="notifications.html">
+                🔔 Notifications
+            </a>
+
+            <a href="index.html">
+                🏠 Home
+            </a>
+
+            <a href="login.html" class="logout">
+                🚪 Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main">
+
+        <div class="top-bar">
+
+            <div>
+                <h1>Employees</h1>
+                <p>Manage all employees in ARU HRMS</p>
+            </div>
+
+            <button class="add-btn" onclick="openAddModal()">
+                + Add Employee
+            </button>
+
+        </div>
+
+
+        <!-- Search -->
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="🔍 Search by name, ID, department or email..."
+                onkeyup="searchEmployees()"
+            >
+
+        </div>
+
+
+        <!-- Employee Table -->
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Department</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="employeeTableBody"></tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- Add/Edit Modal -->
+<div class="modal" id="employeeModal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2 id="modalTitle">Add Employee</h2>
+
+            <span class="close" onclick="closeModal()">
+                &times;
+            </span>
+
+        </div>
+
+
+        <form id="employeeForm">
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label>Employee ID</label>
+
+                    <input
+                        type="text"
+                        id="employeeId"
+                        placeholder="EMP001"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Full Name</label>
+
+                    <input
+                        type="text"
+                        id="employeeName"
+                        placeholder="Employee name"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label>Email</label>
+
+                    <input
+                        type="email"
+                        id="employeeEmail"
+                        placeholder="employee@gmail.com"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Phone</label>
+
+                    <input
+                        type="tel"
+                        id="employeePhone"
+                        placeholder="9876543210"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label>Department</label>
+
+                    <select id="employeeDepartment" required>
+
+                        <option value="">Select Department</option>
+
+                        <option value="CSE">
+                            CSE
+                        </option>
+
+                        <option value="IT">
+                            IT
+                        </option>
+
+                        <option value="ECE">
+                            ECE
+                        </option>
+
+                        <option value="EEE">
+                            EEE
+                        </option>
+
+                        <option value="HR">
+                            HR
+                        </option>
+
+                        <option value="Finance">
+                            Finance
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Role</label>
+
+                    <select id="employeeRole" required>
+
+                        <option value="">Select Role</option>
+
+                        <option value="Manager">
+                            Manager
+                        </option>
+
+                        <option value="Developer">
+                            Developer
+                        </option>
+
+                        <option value="Designer">
+                            Designer
+                        </option>
+
+                        <option value="Tester">
+                            Tester
+                        </option>
+
+                        <option value="HR Executive">
+                            HR Executive
+                        </option>
+
+                        <option value="Intern">
+                            Intern
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Status</label>
+
+                <select id="employeeStatus">
+
+                    <option value="Active">
+                        Active
+                    </option>
+
+                    <option value="Inactive">
+                        Inactive
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button type="submit" class="save-btn">
+                Save Employee
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    let employees = JSON.parse(
+        localStorage.getItem("aruEmployees")
+    ) || [
+
+        {
+            id: "EMP001",
+            name: "Kowshya",
+            email: "kowshya@gmail.com",
+            phone: "9876543210",
+            department: "CSE",
+            role: "Developer",
+            status: "Active"
+        },
+
+        {
+            id: "EMP002",
+            name: "Rahul",
+            email: "rahul@gmail.com",
+            phone: "9876543211",
+            department: "IT",
+            role: "Tester",
+            status: "Active"
+        },
+
+        {
+            id: "EMP003",
+            name: "Priya",
+            email: "priya@gmail.com",
+            phone: "9876543212",
+            department: "HR",
+            role: "HR Executive",
+            status: "Inactive"
+        }
+
+    ];
+
+
+    let editIndex = -1;
+
+
+    // Display employees
+    function displayEmployees(data = employees) {
+
+        const tableBody =
+            document.getElementById("employeeTableBody");
+
+        tableBody.innerHTML = "";
+
+
+        if (data.length === 0) {
+
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="7"
+                        style="text-align:center;padding:30px;">
+                        No employees found
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+
+        data.forEach((employee, index) => {
+
+            const statusClass =
+                employee.status === "Active"
+                ? "active-status"
+                : "inactive-status";
+
+
+            tableBody.innerHTML += `
+
+                <tr>
+
+                    <td>
+                        <strong>${employee.id}</strong>
+                    </td>
+
+                    <td>
+                        ${employee.name}
+                    </td>
+
+                    <td>
+                        ${employee.email}
+                    </td>
+
+                    <td>
+                        ${employee.department}
+                    </td>
+
+                    <td>
+                        ${employee.role}
+                    </td>
+
+                    <td>
+
+                        <span class="status ${statusClass}">
+                            ${employee.status}
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="action-btn view-btn"
+                            onclick="viewEmployee(${index})">
+                            View
+                        </button>
+
+                        <button
+                            class="action-btn edit-btn"
+                            onclick="editEmployee(${index})">
+                            Edit
+                        </button>
+
+                        <button
+                            class="action-btn delete-btn"
+                            onclick="deleteEmployee(${index})">
+                            Delete
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        });
+
+    }
+
+
+    // Open Add Modal
+    function openAddModal() {
+
+        editIndex = -1;
+
+        document.getElementById("modalTitle").innerText =
+            "Add Employee";
+
+        document.getElementById("employeeForm").reset();
+
+        document.getElementById("employeeModal").style.display =
+            "flex";
+
+    }
+
+
+    // Close Modal
+    function closeModal() {
+
+        document.getElementById("employeeModal").style.display =
+            "none";
+
+    }
+
+
+    // Save Employee
+    document.getElementById("employeeForm")
+        .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+
+            const employee = {
+
+                id: document.getElementById("employeeId").value,
+
+                name: document.getElementById("employeeName").value,
+
+                email: document.getElementById("employeeEmail").value,
+
+                phone: document.getElementById("employeePhone").value,
+
+                department:
+                    document.getElementById("employeeDepartment").value,
+
+                role:
+                    document.getElementById("employeeRole").value,
+
+                status:
+                    document.getElementById("employeeStatus").value
+
+            };
+
+
+            if (editIndex === -1) {
+
+                employees.push(employee);
+
+                alert("Employee added successfully!");
+
+            } else {
+
+                employees[editIndex] = employee;
+
+                alert("Employee updated successfully!");
+
+            }
+
+
+            localStorage.setItem(
+                "aruEmployees",
+                JSON.stringify(employees)
+            );
+
+
+            displayEmployees();
+
+            closeModal();
+
+        });
+
+
+    // Edit Employee
+    function editEmployee(index) {
+
+        const employee = employees[index];
+
+        editIndex = index;
+
+
+        document.getElementById("modalTitle").innerText =
+            "Edit Employee";
+
+
+        document.getElementById("employeeId").value =
+            employee.id;
+
+        document.getElementById("employeeName").value =
+            employee.name;
+
+        document.getElementById("employeeEmail").value =
+            employee.email;
+
+        document.getElementById("employeePhone").value =
+            employee.phone;
+
+        document.getElementById("employeeDepartment").value =
+            employee.department;
+
+        document.getElementById("employeeRole").value =
+            employee.role;
+
+        document.getElementById("employeeStatus").value =
+            employee.status;
+
+
+        document.getElementById("employeeModal").style.display =
+            "flex";
+
+    }
+
+
+    // View Employee
+    function viewEmployee(index) {
+
+        const employee = employees[index];
+
+        alert(
+
+            "EMPLOYEE DETAILS\n\n" +
+
+            "ID: " + employee.id + "\n" +
+
+            "Name: " + employee.name + "\n" +
+
+            "Email: " + employee.email + "\n" +
+
+            "Phone: " + employee.phone + "\n" +
+
+            "Department: " + employee.department + "\n" +
+
+            "Role: " + employee.role + "\n" +
+
+            "Status: " + employee.status
+
+        );
+
+    }
+
+
+    // Delete Employee
+    function deleteEmployee(index) {
+
+        const employee = employees[index];
+
+
+        const confirmDelete confirm(
+
+"Are you sure you want to delete employee.name "?" + +
+
+);
+
+if (confirmDelete) {
+
+employees.splice(index, 1);
+
+localStorage.setItem( "aruEmployees", ); JSON.stringify(employees)
+
+display Employees();
+
+alert("Employee deleted successfully!");
+
+}
+
+// Search Employees
+
+function search Employees() {
+
+const searchValue = document.getElementById("searchInput") .value .toLowerCase();
+
+87
+
+const filtered Employees employees.filter(employee
+
+employee.id.toLowerCase().includes (searchValue)
+
+employee.name.toLowerCase().includes (searchValue) ||
+
+employee.email.toLowerCase().includes (searchValue) ||
+
+employee.department.toLowerCase().includes (searchValue) ||employee.department.toLowerCase().includes (searchValue) ||
+
+employee.role.toLowerCase().includes (searchValue) );
+
+}
+
+display Employees (filtered Employees);
+
+// Close modal when clicking outside window.onclick function(event) {
+
+const modal =
+
+document.getElementById("employeeModal");
+
+if (event.target modal) {
+
+closeModal();
+
+}
+
+};
+
+// Initial display
+
+display Employees();
+
+</script>
+
+</body>
+
+</html>
