@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard - ARU HRMS</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        body {
+            background: #f5f6fa;
+        }
+
+        .dashboard-layout {
+            min-height: calc(100vh - 72px);
+            display: flex;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar {
+            width: 250px;
+            background: #171923;
+            color: #ffffff;
+            padding: 25px 15px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-title {
+            padding: 0 15px 25px;
+            border-bottom: 1px solid #30323d;
+        }
+
+        .sidebar-title h2 {
+            font-size: 21px;
+        }
+
+        .sidebar-title span {
+            color: #7778f0;
+        }
+
+        .sidebar-title p {
+            color: #9b9da8;
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        .menu {
+            margin-top: 25px;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 15px;
+            margin-bottom: 7px;
+            color: #c8c9d2;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            background: #5b5ce2;
+            color: #ffffff;
+        }
+
+        .logout-link {
+            margin-top: 30px !important;
+            color: #ff9b9b !important;
+        }
+
+        /* MAIN */
+
+        .dashboard-main {
+            flex: 1;
+            padding: 30px;
+            overflow-x: hidden;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-header h1 {
+            font-size: 30px;
+            margin-bottom: 4px;
+        }
+
+        .dashboard-header p {
+            color: #777a87;
+            font-size: 14px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .theme-btn {
+            width: 42px;
+            height: 42px;
+            border: 1px solid #dfe0e8;
+            background: #ffffff;
+            border-radius: 9px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .profile-mini {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 7px 12px;
+            background: #ffffff;
+            border: 1px solid #e5e6ef;
+            border-radius: 10px;
+        }
+
+        .profile-mini .avatar {
+            width: 35px;
+            height: 35px;
+            font-size: 14px;
+        }
+
+        .profile-mini div:last-child {
+            font-size: 13px;
+        }
+
+        .profile-mini small {
+            display: block;
+            color: #777a87;
+        }
+
+        /* STAT CARDS */
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .dashboard-stat {
+            padding: 22px;
+            background: #ffffff;
+            border: 1px solid #e5e6ef;
+            border-radius: 14px;
+            transition: 0.3s;
+        }
+
+        .dashboard-stat:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(30, 32, 70, 0.08);
+        }
+
+        .stat-icon {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eeeeff;
+            border-radius: 10px;
+            font-size: 21px;
+            margin-bottom: 15px;
+        }
+
+        .dashboard-stat h2 {
+            font-size: 27px;
+            margin-bottom: 3px;
+        }
+
+        .dashboard-stat p {
+            color: #777a87;
+            font-size: 13px;
+        }
+
+        /* CONTENT GRID */
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 22px;
+        }
+
+        .dashboard-card {
+            background: #ffffff;
+            border: 1px solid #e5e6ef;
+            border-radius: 14px;
+            padding: 22px;
+            margin-bottom: 22px;
+        }
+
+        .card-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-heading h2 {
+            font-size: 18px;
+        }
+
+        .view-link {
+            color: #5b5ce2;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        /* EMPLOYEE TABLE */
+
+        .employee-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .employee-table th {
+            text-align: left;
+            padding: 12px 8px;
+            color: #777a87;
+            font-size: 12px;
+            border-bottom: 1px solid #eeeeF2;
+        }
+
+        .employee-table td {
+            padding: 14px 8px;
+            border-bottom: 1px solid #f0f0f4;
+            font-size: 13px;
+        }
+
+        .employee-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+        }
+
+        .employee-avatar {
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eeeeff;
+            color: #5b5ce2;
+            border-radius: 50%;
+            font-weight: 700;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 20px;
+            background: #e8fff2;
+            color: #16834b;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        /* DEPARTMENT */
+
+        .department-item {
+            margin-bottom: 18px;
+        }
+
+        .department-top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 7px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .progress {
+            height: 7px;
+            background: #ececf2;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #5b5ce2;
+            border-radius: 20px;
+        }
+
+        /* NOTIFICATIONS */
+
+        .notification {
+            display: flex;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #eeeeF2;
+        }
+
+        .notification:last-child {
+            border-bottom: none;
+        }
+
+        .notification-icon {
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eeeeff;
+            border-radius: 9px;
+            flex-shrink: 0;
+        }
+
+        .notification p {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .notification small {
+            color: #888b96;
+            font-size: 11px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 1050px) {
+            .dashboard-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 750px) {
+
+            .sidebar {
+                width: 70px;
+                padding: 20px 8px;
+            }
+
+            .sidebar-title {
+                padding: 0 0 20px;
+                text-align: center;
+            }
+
+            .sidebar-title h2 {
+                font-size: 15px;
+            }
+
+            .sidebar-title p {
+                display: none;
+            }
+
+            .menu a {
+                justify-content: center;
+                padding: 13px 5px;
+                font-size: 18px;
+            }
+
+            .menu a span:last-child {
+                display: none;
+            }
+
+            .dashboard-main {
+                padding: 20px 15px;
+            }
+
+            .dashboard-header {
+                align-items: flex-start;
+            }
+
+            .profile-mini {
+                display: none;
+            }
+
+            .employee-table {
+                min-width: 600px;
+            }
+
+            .dashboard-card {
+                overflow-x: auto;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .dashboard-stats {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .dashboard-stat {
+                padding: 16px;
+            }
+
+            .dashboard-stat h2 {
+                font-size: 22px;
+            }
+
+            .dashboard-header h1 {
+                font-size: 24px;
+            }
+
+            .header-actions {
+                gap: 5px;
+            }
+
+            .theme-btn {
+                width: 38px;
+                height: 38px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <!-- TOP NAVIGATION -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            <span>ARU</span> HRMS
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="profile.html">Profile</a>
+        </nav>
+
+    </header>
+
+
+    <div class="dashboard-layout">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-title">
+
+                <h2>
+                    <span>ARU</span> HRMS
+                </h2>
+
+                <p>Management System</p>
+
+            </div>
+
+
+            <div class="menu">
+
+                <a href="dashboard.html" class="active">
+                    <span>📊</span>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="employees.html">
+                    <span>👥</span>
+                    <span>Employees</span>
+                </a>
+
+                <a href="profile.html">
+                    <span>👤</span>
+                    <span>My Profile</span>
+                </a>
+
+                <a href="notifications.html">
+                    <span>🔔</span>
+                    <span>Notifications</span>
+                </a>
+
+                <a href="index.html">
+                    <span>🏠</span>
+                    <span>Home</span>
+                </a>
+
+                <a href="login.html" class="logout-link">
+                    <span>↪</span>
+                    <span>Logout</span>
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+
+        <main class="dashboard-main">
+
+            <div class="dashboard-header">
+
+                <div>
+                    <h1>Dashboard</h1>
+
+                    <p>
+                        Welcome back! Here's your HR overview.
+                    </p>
+                </div>
+
+
+                <div class="header-actions">
+
+                    <button
+                        class="theme-btn"
+                        id="themeButton"
+                        title="Change theme"
+                    >
+                        🌙
+                    </button>
+
+
+                    <div class="profile-mini">
+
+                        <div class="avatar">
+                            A
+                        </div>
+
+                        <div>
+                            <strong>Admin</strong>
+                            <small>HR Manager</small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- STATISTICS -->
+
+            <section class="dashboard-stats">
+
+                <div class="dashboard-stat">
+
+                    <div class="stat-icon">
+                        👥
+                    </div>
+
+                    <h2 id="totalEmployees">
+                        100
+                    </h2>
+
+                    <p>Total Employees</p>
+
+                </div>
+
+
+                <div class="dashboard-stat">
+
+                    <div class="stat-icon">
+                        🟢
+                    </div>
+
+                    <h2>
+                        86
+                    </h2>
+
+                    <p>Active Employees</p>
+
+                </div>
+
+
+                <div class="dashboard-stat">
+
+                    <div class="stat-icon">
+                        🏢
+                    </div>
+
+                    <h2>
+                        8
+                    </h2>
+
+                    <p>Departments</p>
+
+                </div>
+
+
+                <div class="dashboard-stat">
+
+                    <div class="stat-icon">
+                        📋
+                    </div>
+
+                    <h2>
+                        14
+                    </h2>
+
+                    <p>New Requests</p>
+
+                </div>
+
+            </section>
+
+
+            <!-- MAIN GRID -->
+
+            <div class="dashboard-grid">
+
+
+                <!-- LEFT -->
+
+                <div>
+
+                    <!-- RECENT EMPLOYEES -->
+
+                    <div class="dashboard-card">
+
+                        <div class="card-heading">
+
+                            <h2>
+                                Recent Employees
+                            </h2>
+
+                            <a
+                                href="employees.html"
+                                class="view-link"
+                            >
+                                View All
+                            </a>
+
+                        </div>
+
+
+                        <table class="employee-table">
+
+                            <thead>
+
+                                <tr>
+                                    <th>Employee</th>
+                                    <th>Department</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                <tr>
+
+                                    <td>
+                                        <div class="employee-name">
+
+                                            <div class="employee-avatar">
+                                                A
+                                            </div>
+
+                                            Arjun Kumar
+
+                                        </div>
+                                    </td>
+
+                                    <td>IT</td>
+
+                                    <td>Developer</td>
+
+                                    <td>
+                                        <span class="badge">
+                                            Active
+                                        </span>
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+                                        <div class="employee-name">
+
+                                            <div class="employee-avatar">
+                                                S
+                                            </div>
+
+                                            Sneha Priya
+
+                                        </div>
+                                    </td>
+
+                                    <td>HR</td>
+
+                                    <td>HR Executive</td>
+
+                                    <td>
+                                        <span class="badge">
+                                            Active
+                                        </span>
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+                                        <div class="employee-name">
+
+                                            <div class="employee-avatar">
+                                                R
+                                            </div>
+
+                                            Rahul Raj
+
+                                        </div>
+                                    </td>
+
+                                    <td>Finance</td>
+
+                                    <td>Accountant</td>
+
+                                    <td>
+                                        <span class="badge">
+                                            Active
+                                        </span>
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+                                        <div class="employee-name">
+
+                                            <div class="employee-avatar">
+                                                P
+                                            </div>
+
+                                            Priya Devi
+
+                                        </div>
+                                    </td>
+
+                                    <td>Marketing</td>
+
+                                    <td>Coordinator</td>
+
+                                    <td>
+                                        <span class="badge">
+                                            Active
+                                        </span>
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                    <!-- DEPARTMENT OVERVIEW -->
+
+                    <div class="dashboard-card">
+
+                        <div class="card-heading">
+
+                            <h2>
+                                Department Overview
+                            </h2>
+
+                        </div>
+
+
+                        <div class="department-item">
+
+                            <div class="department-top">
+                                <span>IT Department</span>
+                                <span>35%</span>
+                            </div>
+
+                            <div class="progress">
+                                <div
+                                    class="progress-bar"
+                                    style="width: 35%;"
+                                ></div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="department-item">
+
+                            <div class="department-top">
+                                <span>HR Department</span>
+                                <span>20%</span>
+                            </div>
+
+                            <div class="progress">
+                                <div
+                                    class="progress-bar"
+                                    style="width: 20%;"
+                                ></div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="department-item">
+
+                            <div class="department-top">
+                                <span>Finance</span>
+                                <span>18%</span>
+                            </div>
+
+                            <div class="progress">
+                                <div
+                                    class="progress-bar"
+                                    style="width: 18%;"
+                                ></div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="department-item">
+
+                            <div class="department-top">
+                                <span>Marketing</span>
+                                <span>15%</span>
+                            </div>
+
+             
