@@ -2,1078 +2,637 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Dashboard - ARU HRMS</title>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ARU HRMS - Dashboard</title>
 
     <link rel="stylesheet" href="css/style.css">
 
     <style>
+
         body {
-            background: #f5f6fa;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #222;
         }
 
-        .dashboard-layout {
-            min-height: calc(100vh - 72px);
+        .layout {
             display: flex;
+            min-height: 100vh;
         }
-
-        /* SIDEBAR */
 
         .sidebar {
-            width: 250px;
-            background: #171923;
-            color: #ffffff;
+            width: 240px;
+            background: #111827;
+            color: white;
             padding: 25px 15px;
-            flex-shrink: 0;
+            box-sizing: border-box;
         }
 
-        .sidebar-title {
-            padding: 0 15px 25px;
-            border-bottom: 1px solid #30323d;
-        }
-
-        .sidebar-title h2 {
-            font-size: 21px;
-        }
-
-        .sidebar-title span {
-            color: #7778f0;
-        }
-
-        .sidebar-title p {
-            color: #9b9da8;
-            font-size: 12px;
-            margin-top: 3px;
-        }
-
-        .menu {
-            margin-top: 25px;
-        }
-
-        .menu a {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 13px 15px;
-            margin-bottom: 7px;
-            color: #c8c9d2;
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: 0.3s;
-        }
-
-        .menu a:hover,
-        .menu a.active {
-            background: #5b5ce2;
-            color: #ffffff;
-        }
-
-        .logout-link {
-            margin-top: 30px !important;
-            color: #ff9b9b !important;
-        }
-
-        /* MAIN */
-
-        .dashboard-main {
-            flex: 1;
-            padding: 30px;
-            overflow-x: hidden;
-        }
-
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .logo {
+            text-align: center;
             margin-bottom: 30px;
         }
 
-        .dashboard-header h1 {
-            font-size: 30px;
-            margin-bottom: 4px;
+        .logo h2 {
+            margin: 0;
         }
 
-        .dashboard-header p {
-            color: #777a87;
-            font-size: 14px;
+        .logo span {
+            color: #60a5fa;
         }
 
-        .header-actions {
+        .nav-menu {
             display: flex;
-            align-items: center;
-            gap: 12px;
+            flex-direction: column;
+            gap: 8px;
         }
 
-        .theme-btn {
-            width: 42px;
-            height: 42px;
-            border: 1px solid #dfe0e8;
-            background: #ffffff;
-            border-radius: 9px;
-            cursor: pointer;
-            font-size: 18px;
+        .nav-menu a {
+            color: #d1d5db;
+            text-decoration: none;
+            padding: 13px 15px;
+            border-radius: 8px;
         }
 
-        .profile-mini {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 7px 12px;
-            background: #ffffff;
-            border: 1px solid #e5e6ef;
-            border-radius: 10px;
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            background: #2563eb;
+            color: white;
         }
 
-        .profile-mini .avatar {
-            width: 35px;
-            height: 35px;
-            font-size: 14px;
+        .logout {
+            margin-top: 25px;
+            color: #f87171 !important;
         }
 
-        .profile-mini div:last-child {
-            font-size: 13px;
+        .main {
+            flex: 1;
+            padding: 30px;
+            box-sizing: border-box;
         }
 
-        .profile-mini small {
-            display: block;
-            color: #777a87;
-        }
-
-        /* STAT CARDS */
-
-        .dashboard-stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 18px;
+        .welcome {
             margin-bottom: 25px;
         }
 
-        .dashboard-stat {
-            padding: 22px;
-            background: #ffffff;
-            border: 1px solid #e5e6ef;
-            border-radius: 14px;
-            transition: 0.3s;
+        .welcome h1 {
+            margin: 0;
+            font-size: 30px;
         }
 
-        .dashboard-stat:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px rgba(30, 32, 70, 0.08);
+        .welcome p {
+            color: #6b7280;
         }
 
-        .stat-icon {
-            width: 45px;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #eeeeff;
-            border-radius: 10px;
-            font-size: 21px;
-            margin-bottom: 15px;
-        }
-
-        .dashboard-stat h2 {
-            font-size: 27px;
-            margin-bottom: 3px;
-        }
-
-        .dashboard-stat p {
-            color: #777a87;
-            font-size: 13px;
-        }
-
-        /* CONTENT GRID */
-
-        .dashboard-grid {
+        .stats {
             display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 22px;
+            grid-template-columns:
+                repeat(4, 1fr);
+            gap: 18px;
         }
 
-        .dashboard-card {
-            background: #ffffff;
-            border: 1px solid #e5e6ef;
-            border-radius: 14px;
+        .stat-card {
+            background: white;
             padding: 22px;
-            margin-bottom: 22px;
+            border-radius: 12px;
+            box-shadow:
+                0 3px 12px rgba(0,0,0,0.06);
         }
 
-        .card-heading {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
+        .stat-card h3 {
+            margin: 0;
+            color: #6b7280;
+            font-size: 14px;
         }
 
-        .card-heading h2 {
-            font-size: 18px;
+        .stat-card h2 {
+            margin: 10px 0 0;
+            font-size: 30px;
         }
 
-        .view-link {
-            color: #5b5ce2;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 700;
+        .icon {
+            font-size: 25px;
         }
 
-        /* EMPLOYEE TABLE */
+        .section {
+            background: white;
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow:
+                0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        .section h2 {
+            margin-top: 0;
+        }
 
         .employee-table {
             width: 100%;
             border-collapse: collapse;
         }
 
-        .employee-table th {
-            text-align: left;
-            padding: 12px 8px;
-            color: #777a87;
-            font-size: 12px;
-            border-bottom: 1px solid #eeeeF2;
-        }
-
+        .employee-table th,
         .employee-table td {
-            padding: 14px 8px;
-            border-bottom: 1px solid #f0f0f4;
+            padding: 13px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .employee-table th {
+            color: #6b7280;
             font-size: 13px;
         }
 
-        .employee-name {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 700;
+        .status {
+            background: #dcfce7;
+            color: #15803d;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
         }
 
-        .employee-avatar {
-            width: 35px;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #eeeeff;
-            color: #5b5ce2;
-            border-radius: 50%;
-            font-weight: 700;
+        .message {
+            margin-top: 15px;
+            color: #dc2626;
         }
 
-        .badge {
-            display: inline-block;
-            padding: 5px 9px;
-            border-radius: 20px;
-            background: #e8fff2;
-            color: #16834b;
-            font-size: 11px;
-            font-weight: 700;
-        }
+        @media (max-width: 900px) {
 
-        /* DEPARTMENT */
-
-        .department-item {
-            margin-bottom: 18px;
-        }
-
-        .department-top {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 7px;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .progress {
-            height: 7px;
-            background: #ececf2;
-            border-radius: 20px;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: #5b5ce2;
-            border-radius: 20px;
-        }
-
-        /* NOTIFICATIONS */
-
-        .notification {
-            display: flex;
-            gap: 12px;
-            padding: 12px 0;
-            border-bottom: 1px solid #eeeeF2;
-        }
-
-        .notification:last-child {
-            border-bottom: none;
-        }
-
-        .notification-icon {
-            width: 35px;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #eeeeff;
-            border-radius: 9px;
-            flex-shrink: 0;
-        }
-
-        .notification p {
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .notification small {
-            color: #888b96;
-            font-size: 11px;
-        }
-
-        /* MOBILE */
-
-        @media (max-width: 1050px) {
-            .dashboard-stats {
-                grid-template-columns: repeat(2, 1fr);
+            .stats {
+                grid-template-columns:
+                    repeat(2, 1fr);
             }
 
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
         }
 
-        @media (max-width: 750px) {
+        @media (max-width: 650px) {
+
+            .layout {
+                flex-direction: column;
+            }
 
             .sidebar {
-                width: 70px;
-                padding: 20px 8px;
+                width: 100%;
+                padding: 15px;
             }
 
-            .sidebar-title {
-                padding: 0 0 20px;
-                text-align: center;
+            .nav-menu {
+                flex-direction: row;
+                overflow-x: auto;
             }
 
-            .sidebar-title h2 {
-                font-size: 15px;
+            .nav-menu a {
+                white-space: nowrap;
             }
 
-            .sidebar-title p {
-                display: none;
+            .main {
+                padding: 18px;
             }
 
-            .menu a {
-                justify-content: center;
-                padding: 13px 5px;
-                font-size: 18px;
-            }
-
-            .menu a span:last-child {
-                display: none;
-            }
-
-            .dashboard-main {
-                padding: 20px 15px;
-            }
-
-            .dashboard-header {
-                align-items: flex-start;
-            }
-
-            .profile-mini {
-                display: none;
+            .stats {
+                grid-template-columns: 1fr;
             }
 
             .employee-table {
-                min-width: 600px;
+                font-size: 13px;
             }
 
-            .dashboard-card {
-                overflow-x: auto;
+            .employee-table th:nth-child(4),
+            .employee-table td:nth-child(4) {
+                display: none;
             }
+
         }
 
-        @media (max-width: 500px) {
-
-            .dashboard-stats {
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
-            }
-
-            .dashboard-stat {
-                padding: 16px;
-            }
-
-            .dashboard-stat h2 {
-                font-size: 22px;
-            }
-
-            .dashboard-header h1 {
-                font-size: 24px;
-            }
-
-            .header-actions {
-                gap: 5px;
-            }
-
-            .theme-btn {
-                width: 38px;
-                height: 38px;
-            }
-        }
     </style>
+
 </head>
 
 
 <body>
 
-    <!-- TOP NAVIGATION -->
+<div class="layout">
 
-    <header class="navbar">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
 
         <div class="logo">
-            <span>ARU</span> HRMS
+
+            <h2>
+                ARU <span>HRMS</span>
+            </h2>
+
         </div>
 
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="profile.html">Profile</a>
+
+        <nav class="nav-menu">
+
+            <a
+                href="dashboard.html"
+                class="active"
+            >
+                📊 Dashboard
+            </a>
+
+            <a href="employees.html">
+                👥 Employees
+            </a>
+
+            <a href="profile.html">
+                👤 Profile
+            </a>
+
+            <a href="notifications.html">
+                🔔 Notifications
+            </a>
+
+            <a href="index.html">
+                🏠 Home
+            </a>
+
+            <a
+                href="login.html"
+                class="logout"
+                onclick="logout()"
+            >
+                🚪 Logout
+            </a>
+
         </nav>
 
-    </header>
+    </aside>
 
 
-    <div class="dashboard-layout">
+    <!-- MAIN -->
 
-        <!-- SIDEBAR -->
+    <main class="main">
 
-        <aside class="sidebar">
 
-            <div class="sidebar-title">
+        <div class="welcome">
 
-                <h2>
-                    <span>ARU</span> HRMS
+            <h1>
+                Welcome, <span id="userName">
+                    Employee
+                </span> 👋
+            </h1>
+
+            <p>
+                Here's what's happening in your HRMS today.
+            </p>
+
+        </div>
+
+
+        <!-- STATISTICS -->
+
+        <div class="stats">
+
+
+            <div class="stat-card">
+
+                <div class="icon">
+                    👥
+                </div>
+
+                <h3>
+                    Total Employees
+                </h3>
+
+                <h2 id="totalEmployees">
+                    0
                 </h2>
 
-                <p>Management System</p>
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="icon">
+                    ✅
+                </div>
+
+                <h3>
+                    Active Employees
+                </h3>
+
+                <h2 id="activeEmployees">
+                    0
+                </h2>
 
             </div>
 
 
-            <div class="menu">
+            <div class="stat-card">
 
-                <a href="dashboard.html" class="active">
-                    <span>📊</span>
-                    <span>Dashboard</span>
-                </a>
-
-                <a href="employees.html">
-                    <span>👥</span>
-                    <span>Employees</span>
-                </a>
-
-                <a href="profile.html">
-                    <span>👤</span>
-                    <span>My Profile</span>
-                </a>
-
-                <a href="notifications.html">
-                    <span>🔔</span>
-                    <span>Notifications</span>
-                </a>
-
-                <a href="index.html">
-                    <span>🏠</span>
-                    <span>Home</span>
-                </a>
-
-                <a href="login.html" class="logout-link">
-                    <span>↪</span>
-                    <span>Logout</span>
-                </a>
-
-            </div>
-
-        </aside>
-
-
-        <!-- MAIN CONTENT -->
-
-        <main class="dashboard-main">
-
-            <div class="dashboard-header">
-
-                <div>
-                    <h1>Dashboard</h1>
-
-                    <p>
-                        Welcome back! Here's your HR overview.
-                    </p>
+                <div class="icon">
+                    🏢
                 </div>
 
+                <h3>
+                    Departments
+                </h3>
 
-                <div class="header-actions">
-
-                    <button
-                        class="theme-btn"
-                        id="themeButton"
-                        title="Change theme"
-                    >
-                        🌙
-                    </button>
-
-
-                    <div class="profile-mini">
-
-                        <div class="avatar">
-                            A
-                        </div>
-
-                        <div>
-                            <strong>Admin</strong>
-                            <small>HR Manager</small>
-                        </div>
-
-                    </div>
-
-                </div>
+                <h2 id="totalDepartments">
+                    0
+                </h2>
 
             </div>
 
 
-            <!-- STATISTICS -->
+            <div class="stat-card">
 
-            <section class="dashboard-stats">
-
-                <div class="dashboard-stat">
-
-                    <div class="stat-icon">
-                        👥
-                    </div>
-
-                    <h2 id="totalEmployees">
-                        100
-                    </h2>
-
-                    <p>Total Employees</p>
-
+                <div class="icon">
+                    📈
                 </div>
 
+                <h3>
+                    Active Rate
+                </h3>
 
-                <div class="dashboard-stat">
+                <h2 id="activeRate">
+                    0%
+                </h2>
 
-                    <div class="stat-icon">
-                        🟢
-                    </div>
+            </div>
 
-                    <h2>
-                        86
-                    </h2>
 
-                    <p>Active Employees</p>
+        </div>
 
-                </div>
 
+        <!-- RECENT EMPLOYEES -->
 
-                <div class="dashboard-stat">
+        <div class="section">
 
-                    <div class="stat-icon">
-                        🏢
-                    </div>
+            <h2>
+                Recent Employees
+            </h2>
 
-                    <h2>
-                        8
-                    </h2>
+            <table class="employee-table">
 
-                    <p>Departments</p>
+                <thead>
 
-                </div>
+                    <tr>
 
+                        <th>
+                            Employee ID
+                        </th>
 
-                <div class="dashboard-stat">
+                        <th>
+                            Name
+                        </th>
 
-                    <div class="stat-icon">
-                        📋
-                    </div>
+                        <th>
+                            Department
+                        </th>
 
-                    <h2>
-                        14
-                    </h2>
+                        <th>
+                            Role
+                        </th>
 
-                    <p>New Requests</p>
+                        <th>
+                            Status
+                        </th>
 
-                </div>
+                    </tr>
 
-            </section>
+                </thead>
 
 
-            <!-- MAIN GRID -->
+                <tbody id="employeeTableBody">
 
-            <div class="dashboard-grid">
+                    <tr>
 
+                        <td colspan="5">
+                            Loading employees...
+                        </td>
 
-                <!-- LEFT -->
+                    </tr>
 
-                <div>
+                </tbody>
 
-                    <!-- RECENT EMPLOYEES -->
+            </table>
 
-                    <div class="dashboard-card">
+            <p
+                id="errorMessage"
+                class="message"
+            ></p>
 
-                        <div class="card-heading">
+        </div>
 
-                            <h2>
-                                Recent Employees
-                            </h2>
 
-                            <a
-                                href="employees.html"
-                                class="view-link"
-                            >
-                                View All
-                            </a>
-
-                        </div>
-
-
-                        <table class="employee-table">
-
-                            <thead>
-
-                                <tr>
-                                    <th>Employee</th>
-                                    <th>Department</th>
-                                    <th>Role</th>
-                                    <th>Status</th>
-                                </tr>
-
-                            </thead>
-
-
-                            <tbody>
-
-                                <tr>
-
-                                    <td>
-                                        <div class="employee-name">
-
-                                            <div class="employee-avatar">
-                                                A
-                                            </div>
-
-                                            Arjun Kumar
-
-                                        </div>
-                                    </td>
-
-                                    <td>IT</td>
-
-                                    <td>Developer</td>
-
-                                    <td>
-                                        <span class="badge">
-                                            Active
-                                        </span>
-                                    </td>
-
-                                </tr>
-
-
-                                <tr>
-
-                                    <td>
-                                        <div class="employee-name">
-
-                                            <div class="employee-avatar">
-                                                S
-                                            </div>
-
-                                            Sneha Priya
-
-                                        </div>
-                                    </td>
-
-                                    <td>HR</td>
-
-                                    <td>HR Executive</td>
-
-                                    <td>
-                                        <span class="badge">
-                                            Active
-                                        </span>
-                                    </td>
-
-                                </tr>
-
-
-                                <tr>
-
-                                    <td>
-                                        <div class="employee-name">
-
-                                            <div class="employee-avatar">
-                                                R
-                                            </div>
-
-                                            Rahul Raj
-
-                                        </div>
-                                    </td>
-
-                                    <td>Finance</td>
-
-                                    <td>Accountant</td>
-
-                                    <td>
-                                        <span class="badge">
-                                            Active
-                                        </span>
-                                    </td>
-
-                                </tr>
-
-
-                                <tr>
-
-                                    <td>
-                                        <div class="employee-name">
-
-                                            <div class="employee-avatar">
-                                                P
-                                            </div>
-
-                                            Priya Devi
-
-                                        </div>
-                                    </td>
-
-                                    <td>Marketing</td>
-
-                                    <td>Coordinator</td>
-
-                                    <td>
-                                        <span class="badge">
-                                            Active
-                                        </span>
-                                    </td>
-
-                                </tr>
-
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-
-                    <!-- DEPARTMENT OVERVIEW -->
-
-                    <div class="dashboard-card">
-
-                        <div class="card-heading">
-
-                            <h2>
-                                Department Overview
-                            </h2>
-
-                        </div>
-
-
-                        <div class="department-item">
-
-                            <div class="department-top">
-                                <span>IT Department</span>
-                                <span>35%</span>
-                            </div>
-
-                            <div class="progress">
-                                <div
-                                    class="progress-bar"
-                                    style="width: 35%;"
-                                ></div>
-                            </div>
-
-                        </div>
-
-
-                        <div class="department-item">
-
-                            <div class="department-top">
-                                <span>HR Department</span>
-                                <span>20%</span>
-                            </div>
-
-                            <div class="progress">
-                                <div
-                                    class="progress-bar"
-                                    style="width: 20%;"
-                                ></div>
-                            </div>
-
-                        </div>
-
-
-                        <div class="department-item">
-
-                            <div class="department-top">
-                                <span>Finance</span>
-                                <span>18%</span>
-                            </div>
-
-                            <div class="progress">
-                                <div
-                                    class="progress-bar"
-                                    style="width: 18%;"
-                                ></div>
-                            </div>
-
-                        </div>
-
-
-                        <div class="department-item">
-
-                            <div class="department-top">
-                                <span>Marketing</span>
-                                <span>15%</span>
-                            </div>
-<div class="progress">
-
-<div
-
-class="progress-bar"
-
-style="width: 15%;"
-
-></div>
+    </main>
 
 </div>
 
-</div>
-
-</div>
-
-</div>
-
-<!-- RIGHT -->
-
-<div>
-
-<!-- QUICK ACTIONS ->
-
-<div class="dashboard-card">
-
-<div class="card-heading">
-
-<h2>
-
-Quick Actions
-
-</h2>
-
-</div>
-
-<a
-
-7
-
-href="employees.html"
-
-class="primary-btn"
-
-style="display:block;text-align:center; margin-bottom: 10px;"
-
->
-
-</a>
-
-<a
-
-+ Manage Employees
-
-href="profile.html"
-
-class="secondary-btn"
-
-style="display:block;text-align:center;"
-
->
-
-View Profile
-
-</a>
-
-</div>
-<!-- NOTIFICATIONS
-
-<div class="dashboard-card">
-
-<div class="card-heading">
-
-<h2>
-
-Notifications
-
-</h2>
-
-<a
-
-7
-
-href="notifications.html"
-
-class="view-link"
-
-View All
-
-</a>
-
-</div>
-
-<div class="notification">
-
-<div class="notification-icon">
-
-</div>
-
-<div>
-
-<p>
-
-New employee registered
-
-</p>
-
-<small>
-
-10 minutes ago
-
-</small>
-
-</div>
-
-</div>
-
-<div class="notification">
-
-<div class="notification-icon">
-
-17
-
-</div>
-
-<div>
-
-<p>
-
-HR meeting scheduled
-
-</p>
-
-<small>
-
-2 hours ago
-
-</small>
-
-</div>
-</div>
-<div class="notification">
-
-<div class="notification-icon">
-
-</div>
-
-<div>
-
-<p>
-
-New profile update
-
-request
-
-87
-
-</p>
-
-<small>
-
-Yesterday
-
-</small>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</main>
-
-</div>
-
-<!-- THEME SCRIPT
 
 <script>
 
-const themeButton = document.getElementById("themeButton");
+    const API_URL =
+        "http://localhost:3000";
 
-let darkMode = false;
 
-themeButton.addEventListener(
+    // Show logged-in user
 
-"click", function () {
+    const savedEmployee =
+        localStorage.getItem(
+            "aruLoggedInEmployee"
+        );
 
-darkMode ! darkMode;
 
-if (darkMode) {
+    if (savedEmployee) {
 
-document.body.style.background =
+        const employee =
+            JSON.parse(savedEmployee);
 
-"#111217";
+        document.getElementById(
+            "userName"
+        ).textContent =
+            employee.name;
 
-document.body.style.color = "#ffffff";
+    }
 
-document
 
-.querySelectorAll(".dashboard-card,
+    // Load employees
 
-.dashboard-stat, .profile-mini,theme-btn").forEach(function (element) {
+    async function loadDashboard() {
 
-element.style.background =
+        try {
 
-"#1d1f27";
+            const response =
+                await fetch(
+                    `${API_URL}/api/employees`
+                );
 
-element.style.color =
 
-"#ffffff";
+            const data =
+                await response.json();
 
-element.style.borderColor
 
-"#30323d";
+            if (!data.success) {
 
-});
+                throw new Error(
+                    "Unable to load employees"
+                );
 
-themeButton.textConten t
+            }
 
-} else {
 
-}
+            const employees =
+                data.employees;
 
-}
 
-);
+            // Total
 
-location.reload();
+            document.getElementById(
+                "totalEmployees"
+            ).textContent =
+                employees.length;
+
+
+            // Active
+
+            const active =
+                employees.filter(
+                    employee =>
+                        employee.status === "Active"
+                );
+
+
+            document.getElementById(
+                "activeEmployees"
+            ).textContent =
+                active.length;
+
+
+            // Departments
+
+            const departments =
+                new Set(
+                    employees.map(
+                        employee =>
+                            employee.department
+                    )
+                );
+
+
+            document.getElementById(
+                "totalDepartments"
+            ).textContent =
+                departments.size;
+
+
+            // Active rate
+
+            const rate =
+                employees.length > 0
+                ? Math.round(
+                    (active.length /
+                    employees.length) * 100
+                )
+                : 0;
+
+
+            document.getElementById(
+                "activeRate"
+            ).textContent =
+                rate + "%";
+
+
+            // Employee table
+
+            const tableBody =
+                document.getElementById(
+                    "employeeTableBody"
+                );
+
+
+            tableBody.innerHTML = "";
+
+
+            employees
+                .slice(0, 5)
+                .forEach(employee => {
+
+                    const row =
+                        document.createElement(
+                            "tr"
+                        );
+
+
+                    row.innerHTML = `
+
+                        <td>
+                            ${employee.employee_id}
+                        </td>
+
+                        <td>
+                            ${employee.name}
+                        </td>
+
+                        <td>
+                            ${employee.department}
+                        </td>
+
+                        <td>
+                            ${employee.role}
+                        </td>
+
+                        <td>
+                            <span class="status">
+                                ${employee.status}
+                            </span>
+                        </td>
+
+                    `;
+
+
+                    tableBody.appendChild(row);
+
+                });
+
+
+        } catch (error) {
+
+            console.error(error);
+
+
+            document.getElementById(
+                "errorMessage"
+            ).textContent =
+                "Backend connection failed. Start the server to load dashboard data.";
+
+        }
+
+    }
+
+
+    // Logout
+
+    function logout() {
+
+        localStorage.removeItem(
+            "aruLoggedInEmployee"
+        );
+
+    }
+
+
+    loadDashboard();
 
 </script>
 
 </body>
 
 </html>
-
-             
