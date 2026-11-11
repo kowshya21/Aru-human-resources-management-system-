@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register - ARU HRMS</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .register-page {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 45px 20px;
+            background: #f7f8fc;
+        }
+
+        .register-container {
+            width: 100%;
+            max-width: 500px;
+            padding: 38px;
+            background: #ffffff;
+            border: 1px solid #e5e6ef;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(35, 38, 80, 0.12);
+        }
+
+        .register-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .register-header h1 {
+            font-size: 32px;
+            margin-bottom: 5px;
+        }
+
+        .register-header h1 span {
+            color: #5b5ce2;
+        }
+
+        .register-header p {
+            color: #777a87;
+            font-size: 14px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #dfe0e8;
+            border-radius: 9px;
+            outline: none;
+            background: #ffffff;
+            font-size: 14px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #5b5ce2;
+            box-shadow: 0 0 0 3px rgba(91, 92, 226, 0.1);
+        }
+
+        .password-box {
+            position: relative;
+        }
+
+        .password-box input {
+            padding-right: 65px;
+        }
+
+        .show-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: none;
+            color: #5b5ce2;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .register-submit {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 9px;
+            background: #5b5ce2;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 5px;
+            transition: 0.3s;
+        }
+
+        .register-submit:hover {
+            background: #4445c7;
+        }
+
+        .message {
+            display: none;
+            margin-top: 15px;
+            padding: 11px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .login-link {
+            margin-top: 22px;
+            text-align: center;
+            color: #777a87;
+            font-size: 14px;
+        }
+
+        .login-link a {
+            color: #5b5ce2;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .back-home {
+            margin-top: 18px;
+            text-align: center;
+        }
+
+        .back-home a {
+            color: #555866;
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+        @media (max-width: 550px) {
+
+            .register-container {
+                padding: 28px 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            <span>ARU</span> HRMS
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="login.html">Login</a>
+        </nav>
+
+    </header>
+
+
+    <!-- REGISTER -->
+
+    <main class="register-page">
+
+        <div class="register-container">
+
+            <div class="register-header">
+
+                <h1>
+                    <span>ARU</span> HRMS
+                </h1>
+
+                <p>
+                    Create your employee account
+                </p>
+
+            </div>
+
+
+            <form id="registerForm">
+
+                <!-- Name + Employee ID -->
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="fullName">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="fullName"
+                            placeholder="Enter full name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="employeeId">
+                            Employee ID
+                        </label>
+
+                        <input
+                            type="text"
+                            id="employeeId"
+                            placeholder="EMP001"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Email -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="employee@example.com"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Department + Role -->
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="department">
+                            Department
+                        </label>
+
+                        <select id="department" required>
+
+                            <option value="">
+                                Select Department
+                            </option>
+
+                            <option value="IT">
+                                IT
+                            </option>
+
+                            <option value="HR">
+                                Human Resources
+                            </option>
+
+                            <option value="Finance">
+                                Finance
+                            </option>
+
+                            <option value="Marketing">
+                                Marketing
+                            </option>
+
+                            <option value="Operations">
+                                Operations
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="role">
+                            Role
+                        </label>
+
+                        <select id="role" required>
+
+                            <option value="">
+                                Select Role
+                            </option>
+
+                            <option value="Employee">
+                                Employee
+                            </option>
+
+                            <option value="Manager">
+                                Manager
+                            </option>
+
+                            <option value="HR">
+                                HR
+                            </option>
+
+                            <option value="Admin">
+                                Admin
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Password -->
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <div class="password-box">
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Create password"
+                            required
+                            minlength="6"
+                        >
+
+                        <button
+                            type="button"
+                            class="show-password"
+                            id="showPassword"
+                        >
+                            Show
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Confirm Password -->
+
+                <div class="form-group">
+
+                    <label for="confirmPassword">
+                        Confirm Password
+                    </label>
+
+                    <div class="password-box">
+
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            placeholder="Confirm password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="show-password"
+                            id="showConfirmPassword"
+                        >
+                            Show
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="register-submit"
+                >
+                    Create Account
+                </button>
+
+
+                <div
+                    class="message"
+                    id="message"
+                ></div>
+
+            </form>
+
+
+            <div class="login-link">
+
+                Already have an account?
+
+                <a href="login.html">
+                    Login
+                </a>
+
+            </div>
+
+
+            <div class="back-home">
+
+                <a href="index.html">
+                    ← Back to Home
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div>
+            <strong>ARU HRMS</strong>
+            <p>Human Resource Management System</p>
+        </div>
+
+        <p>
+            © 2026 ARU HRMS. All Rights Reserved.
+        </p>
+
+    </footer>
+
+
+    <script>
+
+        // Password visibility
+
+        const password =
+            document.getElementById("password");
+
+        const confirmPassword =
+            document.getElementById("confirmPassword");
+
+        const showPassword =
+            document.getElementById("showPassword");
+
+        const showConfirmPassword =
+            document.getElementById("showConfirmPassword");
+
+
+        showPassword.addEventListener(
+            "click",
+            function () {
+
+                if (password.type === "password") {
+
+                    password.type = "text";
+                    showPassword.textContent = "Hide";
+
+                } else {
+
+                    password.type = "password";
+                    showPassword.textContent = "Show";
+
+                }
+
+            }
+        );
+
+
+        showConfirmPassword.addEventListener(
+            "click",
+            function () {
+
+                if (confirmPassword.type === "password") {
+
+                    confirmPassword.type = "text";
+                    showConfirmPassword.textContent = "Hide";
+
+                } else {
+
+                    confirmPassword.type = "password";
+                    showConfirmPassword.textContent = "Show";
+
+                }
+
+            }
+        );
+
+
+        // Registration validation
+
+        const registerForm =
+            document.getElementById("registerForm");
+
+        const message =
+            document.getElementById("message");
+
+
+        registerForm.addEventListener(
+            "submit",
+            function (event) {
+
+                event.preventDefault();
+
+                const passwordValue =
+                    password.value;
+
+                const confirmValue =
+                    confirmPassword.value;
+
+
+                if (passwordValue !== confirmValue) {
+
+                    message.style.display = "block";
+                    message.textContent =
+                        "Passwords do not match.";
+
+                    message.style.background = "#ffe8e8";
+                    message.style.color = "#c62828";
+
+                    return;
+                }
+
+
+                message.style.display = "block";
+                message.textContent =
+                    "Registration details received. Backend will be connected soon.";
+
+                message.style.background = "#e8fff2";
+                message.style.color = "#16834b";
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>
