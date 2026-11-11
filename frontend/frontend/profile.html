@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Profile - ARU HRMS</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #222;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar {
+            width: 240px;
+            background: #111827;
+            color: white;
+            padding: 25px 15px;
+            box-sizing: border-box;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h2 {
+            margin: 0;
+            font-size: 25px;
+        }
+
+        .logo span {
+            color: #60a5fa;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-menu a {
+            color: #d1d5db;
+            text-decoration: none;
+            padding: 13px 15px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .logout {
+            margin-top: 25px;
+            color: #f87171 !important;
+        }
+
+        /* MAIN */
+
+        .main {
+            flex: 1;
+            padding: 30px;
+            box-sizing: border-box;
+        }
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .page-header p {
+            color: #6b7280;
+            margin-top: 7px;
+        }
+
+        /* PROFILE */
+
+        .profile-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 25px;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 14px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        .profile-image {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: #2563eb;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 42px;
+            font-weight: bold;
+            margin: 0 auto 18px;
+        }
+
+        .profile-card h2 {
+            margin: 5px 0;
+        }
+
+        .profile-card p {
+            color: #6b7280;
+            margin: 7px 0;
+        }
+
+        .role-badge {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1d4ed8;
+            padding: 7px 13px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        /* DETAILS */
+
+        .details-card {
+            background: white;
+            border-radius: 14px;
+            padding: 30px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        .details-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .details-header h2 {
+            margin: 0;
+        }
+
+        .edit-btn {
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 11px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .edit-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+
+        .detail-item {
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 12px;
+        }
+
+        .detail-item label {
+            display: block;
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 6px;
+        }
+
+        .detail-item span {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        /* EDIT FORM */
+
+        .edit-form {
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #2563eb;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .save-btn {
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .cancel-btn {
+            border: none;
+            background: #e5e7eb;
+            color: #374151;
+            padding: 12px 20px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 800px) {
+
+            .profile-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                width: 200px;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 15px;
+            }
+
+            .logo {
+                margin-bottom: 15px;
+            }
+
+            .nav-menu {
+                flex-direction: row;
+                overflow-x: auto;
+            }
+
+            .nav-menu a {
+                white-space: nowrap;
+            }
+
+            .main {
+                padding: 15px;
+            }
+
+            .details-card {
+                padding: 20px;
+            }
+
+            .details-header {
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h2>ARU <span>HRMS</span></h2>
+        </div>
+
+        <nav class="nav-menu">
+
+            <a href="dashboard.html">
+                📊 Dashboard
+            </a>
+
+            <a href="employees.html">
+                👥 Employees
+            </a>
+
+            <a href="profile.html" class="active">
+                👤 Profile
+            </a>
+
+            <a href="notifications.html">
+                🔔 Notifications
+            </a>
+
+            <a href="index.html">
+                🏠 Home
+            </a>
+
+            <a href="login.html" class="logout">
+                🚪 Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <div class="page-header">
+
+            <h1>My Profile</h1>
+
+            <p>
+                View and manage your employee profile
+            </p>
+
+        </div>
+
+
+        <div class="profile-container">
+
+
+            <!-- PROFILE CARD -->
+
+            <div class="profile-card">
+
+                <div class="profile-image" id="profileInitial">
+                    K
+                </div>
+
+                <h2 id="profileName">
+                    Kowshya
+                </h2>
+
+                <p id="profileDepartment">
+                    CSE Department
+                </p>
+
+                <span class="role-badge" id="profileRole">
+                    Developer
+                </span>
+
+            </div>
+
+
+            <!-- DETAILS -->
+
+            <div class="details-card">
+
+                <!-- VIEW MODE -->
+
+                <div id="viewMode">
+
+                    <div class="details-header">
+
+                        <h2>Personal Information</h2>
+
+                        <button
+                            class="edit-btn"
+                            onclick="enableEdit()">
+
+                            ✏️ Edit Profile
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="details-grid">
+
+                        <div class="detail-item">
+
+                            <label>
+                                Employee ID
+                            </label>
+
+                            <span id="viewId">
+                                EMP001
+                            </span>
+
+                        </div>
+
+
+                        <div class="detail-item">
+
+                            <label>
+                                Full Name
+                            </label>
+
+                            <span id="viewName">
+                                Kowshya
+                            </span>
+
+                        </div>
+
+
+                        <div class="detail-item">
+
+                            <label>
+                                Email
+                            </label>
+
+                            <span id="viewEmail">
+                                kowshya@gmail.com
+                            </span>
+
+                        </div>
+
+
+                        <div class="detail-item">
+
+                            <label>
+                                Phone
+                            </label>
+
+                            <span id="viewPhone">
+                                9876543210
+                            </span>
+
+                        </div>
+
+
+                        <div class="detail-item">
+
+                            <label>
+                                Department
+                            </label>
+
+                            <span id="viewDepartment">
+                                CSE
+                            </span>
+
+                        </div>
+
+
+                        <div class="detail-item">
+
+                            <label>
+                                Role
+                            </label>
+
+                            <span id="viewRole">
+                                Developer
+                            </span>
+
+                        </div>
+
+
+                        <div class="detail-item">
+
+                            <label>
+                                Joining Date
+                            </label>
+
+                            <span id="viewJoining">
+                                01 August 2025
+                            </span>
+
+                        </div>
+
+
+                        <div class="detail-item">
+
+                            <label>
+                                Status
+                            </label>
+
+                            <span id="viewStatus">
+                                Active
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EDIT MODE -->
+
+                <div class="edit-form" id="editMode">
+
+                    <div class="details-header">
+
+                        <h2>Edit Profile</h2>
+
+                    </div>
+
+
+                    <form id="profileForm">
+
+                        <div class="form-group">
+
+                            <label>
+                                Employee ID
+                            </label>
+
+                            <input
+                                type="text"
+                                id="editId"
+                                value="EMP001"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Full Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="editName"
+                                value="Kowshya"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Email
+                            </label>
+
+                            <input
+                                type="email"
+                                id="editEmail"
+                                value="kowshya@gmail.com"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Phone
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="editPhone"
+                                value="9876543210"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Department
+                            </label>
+
+                            <select id="editDepartment">
+
+                                <option value="CSE">
+                                    CSE
+                                </option>
+
+                                <option value="IT">
+                                    IT
+                                </option>
+
+                                <option value="ECE">
+                                    ECE
+                                </option>
+
+                                <option value="EEE">
+                                    EEE
+                                </option>
+
+                                <option value="HR">
+                                    HR
+                                </option>
+
+                                <option value="Finance">
+                                    Finance
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Role
+                            </label>
+
+                            <select id="editRole">
+
+                                <option value="Developer">
+                                    Developer
+                                </option>
+
+                                <option value="Manager">
+                                    Manager
+                                </option>
+
+                                <option value="Designer">
+                                    Designer
+                                </option>
+
+                                <option value="Tester">
+                                    Tester
+                                </option>
+
+                                <option value="HR Executive">
+                                    HR Executive
+                                </option>
+
+                                <option value="Intern">
+                                    Intern
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-buttons">
+
+                            <button
+                                type="submit"
+                                class="save-btn">
+
+                                💾 Save Changes
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="cancel-btn"
+                                onclick="cancelEdit()">
+
+                                Cancel
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    // Load saved profile
+
+    let profile = JSON.parse(
+        localStorage.getItem("aruProfile")
+    ) || {
+
+        id: "EMP001",
+
+        name: "Kowshya",
+
+        email: "kowshya@gmail.com",
+
+        phone: "9876543210",
+
+        department: "CSE",
+
+        role: "Developer",
+
+        joining: "01 August 2025",
+
+        status: "Active"
+
+    };
+
+
+    // Display profile
+
+    function displayProfile() {
+
+        document.getElementById("profileName").innerText =
+            profile.name;
+
+        document.getElementById("profileDepartment").innerText =
+            profile.department + " Department";
+
+        document.getElementById("profileRole").innerText =
+            profile.role;
+
+        document.getElementById("profileInitial").innerText =
+            profile.name.charAt(0).toUpperCase();
+
+
+        document.getElementById("viewId").innerText =
+            profile.id;
+
+        document.getElementById("viewName").innerText =
+            profile.name;
+
+        document.getElementById("viewEmail").innerText =
+            profile.email;
+
+        document.getElementById("viewPhone").innerText =
+            profile.phone;
+
+        document.getElementById("viewDepartment").innerText =
+            profile.department;
+
+        document.getElementById("viewRole").innerText =
+            profile.role;
+
+        document.getElementById("viewJoining").innerText =
+            profile.joining;
+
+        document.getElementById("viewStatus").innerText =
+            profile.status;
+
+    }
+
+
+    // Enable edit
+
+    function enableEdit() {
+
+        document.getElementById("viewMode").style.display =
+            "none";
+
+        document.getElementById("editMode").style.display =
+            "block";
+
+
+        document.getElementById("editId").value =
+            profile.id;
+
+        document.getElementById("editName").value =
+            profile.name;
+
+        document.getElementById("editEmail").value =
+            profile.email;
+
+        document.getElementById("editPhone").value =
+            profile.phone;
+
+        document.getElementById("editDepartment").value =
+            profile.department;
+
+        document.getElementById("editRole").value =
+            profile.role;
+
+    }
+
+
+    // Cancel edit
+
+    function cancelEdit() {
+
+        document.getElementById("editMode").style.display =
+            "none";
+
+        document.getElementById("viewMode").style.display =
+            "block";
+
+    }
+
+
+    // Save profile
+
+    document.getElementById("profileForm")
+        .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+
+            profile.id =
+                document.getElementById("editId").value;
+
+            profile.name =
+                document.getElementById("editName").value;
+
+            profile.email =
+                document.getElementById("editEmail").value;
+
+            profile.phone =
+                document.getElementById("editPhone").value;
+
+            profile.department =
+                document.getElementById("editDepartment").value;
+
+            profile.role =
+                document.getElementById("editRole").value;
+
+
+            localStorage.setItem(
+                "aruProfile",
+                JSON.stringify(profile)
+            );
+
+
+            displayProfile();
+
+
+            cancelEdit();
+
+
+            alert("Profile updated successfully! ✅");
+
+        });
+
+
+    // Initial load
+
+    displayProfile();
+
+</script>
+
+</body>
+
+</html>
