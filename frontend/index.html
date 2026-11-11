@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ARU HRMS</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <header class="navbar">
+
+        <div class="logo">
+            <span>ARU</span> HRMS
+        </div>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#features">Features</a>
+            <a href="login.html" class="login-btn">Login</a>
+        </nav>
+
+    </header>
+
+
+    <main>
+
+        <!-- HOME -->
+
+        <section id="home" class="hero">
+
+            <div class="hero-content">
+
+                <p class="welcome">WELCOME TO</p>
+
+                <h1>
+                    ARU
+                    <span>Human Resource</span>
+                    Management System
+                </h1>
+
+                <p class="description">
+                    A smart and simple platform to manage employees,
+                    profiles, notifications and HR activities efficiently.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="login.html" class="primary-btn">
+                        Get Started
+                    </a>
+
+                    <a href="#features" class="secondary-btn">
+                        Explore Features
+                    </a>
+                </div>
+
+            </div>
+
+
+            <div class="hero-card">
+
+                <div class="card-top">
+                    <span>HRMS Dashboard</span>
+                    <span class="status">● Active</span>
+                </div>
+
+                <div class="stats">
+
+                    <div class="stat-box">
+                        <h2 id="employeeCount">100+</h2>
+                        <p>Employees</p>
+                    </div>
+
+                    <div class="stat-box">
+                        <h2>24/7</h2>
+                        <p>Access</p>
+                    </div>
+
+                    <div class="stat-box">
+                        <h2>100%</h2>
+                        <p>Digital</p>
+                    </div>
+
+                </div>
+
+                <div class="mini-profile">
+
+                    <div class="avatar">A</div>
+
+                    <div>
+                        <strong>Employee Management</strong>
+                        <p>Manage your workforce easily</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ABOUT -->
+
+        <section id="about" class="section">
+
+            <div class="section-title">
+                <p>ABOUT SYSTEM</p>
+                <h2>One Platform. Complete HR Management.</h2>
+            </div>
+
+            <div class="about-content">
+
+                <div class="about-card">
+                    <div class="icon">👥</div>
+
+                    <h3>Employee Management</h3>
+
+                    <p>
+                        Store and manage employee information
+                        in one centralized system.
+                    </p>
+                </div>
+
+
+                <div class="about-card">
+                    <div class="icon">🔐</div>
+
+                    <h3>Secure Access</h3>
+
+                    <p>
+                        Authentication-based access keeps
+                        employee information protected.
+                    </p>
+                </div>
+
+
+                <div class="about-card">
+                    <div class="icon">📊</div>
+
+                    <h3>Smart Dashboard</h3>
+
+                    <p>
+                        Get important HR information quickly
+                        through a simple dashboard.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FEATURES -->
+
+        <section id="features" class="section features-section">
+
+            <div class="section-title">
+
+                <p>FEATURES</p>
+
+                <h2>Everything You Need</h2>
+
+            </div>
+
+
+            <div class="features-grid">
+
+                <div class="feature-card">
+                    <span>👤</span>
+                    <h3>Employee Profiles</h3>
+                    <p>
+                        Create and manage detailed employee profiles.
+                    </p>
+                </div>
+
+
+                <div class="feature-card">
+                    <span>➕</span>
+                    <h3>Add Employees</h3>
+                    <p>
+                        Add new employees with required information.
+                    </p>
+                </div>
+
+
+                <div class="feature-card">
+                    <span>🔍</span>
+                    <h3>Search Employees</h3>
+                    <p>
+                        Quickly find employees using search functionality.
+                    </p>
+                </div>
+
+
+                <div class="feature-card">
+                    <span>✏️</span>
+                    <h3>Edit Information</h3>
+                    <p>
+                        Update employee information whenever required.
+                    </p>
+                </div>
+
+
+                <div class="feature-card">
+                    <span>🔔</span>
+                    <h3>Notifications</h3>
+                    <p>
+                        Keep employees updated with important notifications.
+                    </p>
+                </div>
+
+
+                <div class="feature-card">
+                    <span>🌙</span>
+                    <h3>Dark / Light Mode</h3>
+                    <p>
+                        Switch between light and dark themes comfortably.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CTA -->
+
+        <section class="cta">
+
+            <h2>Ready to Manage Your Workforce?</h2>
+
+            <p>
+                Login to ARU HRMS and start managing your employees.
+            </p>
+
+            <a href="login.html" class="primary-btn">
+                Login to HRMS
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <div>
+            <strong>ARU HRMS</strong>
+            <p>Human Resource Management System</p>
+        </div>
+
+        <p>
+            © 2026 ARU HRMS. All Rights Reserved.
+        </p>
+
+    </footer>
+
+
+    <script>
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+
+            link.addEventListener("click", function (event) {
+
+                const target = document.querySelector(
+                    this.getAttribute("href")
+                );
+
+                if (target) {
+
+                    event.preventDefault();
+
+                    target.scrollIntoView({
+                        behavior: "smooth"
+                    });
+
+                }
+
+            });
+
+        });
+
+
+        // Simple employee counter
+        let count = 0;
+        const targetCount = 100;
+
+        const counter = setInterval(() => {
+
+            count++;
+
+            document.getElementById("employeeCount").textContent =
+                count + "+";
+
+            if (count >= targetCount) {
+                clearInterval(counter);
+            }
+
+        }, 15);
+
+    </script>
+
+</body>
+</html>
