@@ -139,4 +139,222 @@
         }
 
         .back-home {
-            margin
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .back-home a {
+            color: #555866;
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+        @media (max-width: 500px) {
+            .login-container {
+                padding: 30px 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="navbar">
+
+        <div class="logo">
+            <span>ARU</span> HRMS
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+        </nav>
+
+    </header>
+
+
+    <main class="login-page">
+
+        <div class="login-container">
+
+            <div class="login-logo">
+                <h1>
+                    <span>ARU</span> HRMS
+                </h1>
+
+                <p>Login to your account</p>
+            </div>
+
+
+            <form id="loginForm">
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <div class="password-box">
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="show-password"
+                            id="togglePassword"
+                        >
+                            Show
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="login-submit"
+                >
+                    Login
+                </button>
+
+
+                <div
+                    class="message"
+                    id="message"
+                ></div>
+
+            </form>
+
+
+            <div class="register-link">
+
+                Don't have an account?
+
+                <a href="register.html">
+                    Register
+                </a>
+
+            </div>
+
+
+            <div class="back-home">
+
+                <a href="index.html">
+                    ← Back to Home
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+
+        <div>
+            <strong>ARU HRMS</strong>
+            <p>Human Resource Management System</p>
+        </div>
+
+        <p>
+            © 2026 ARU HRMS. All Rights Reserved.
+        </p>
+
+    </footer>
+
+
+    <script>
+
+        // Show / Hide Password
+
+        const password =
+            document.getElementById("password");
+
+        const togglePassword =
+            document.getElementById("togglePassword");
+
+        togglePassword.addEventListener(
+            "click",
+            function () {
+
+                if (password.type === "password") {
+
+                    password.type = "text";
+                    togglePassword.textContent = "Hide";
+
+                } else {
+
+                    password.type = "password";
+                    togglePassword.textContent = "Show";
+
+                }
+
+            }
+        );
+
+
+        // Temporary login handling
+        // Backend authentication will be connected later.
+
+        const loginForm =
+            document.getElementById("loginForm");
+
+        const message =
+            document.getElementById("message");
+
+        loginForm.addEventListener(
+            "submit",
+            function (event) {
+
+                event.preventDefault();
+
+                const email =
+                    document.getElementById("email").value.trim();
+
+                const passwordValue =
+                    document.getElementById("password").value.trim();
+
+                if (!email || !passwordValue) {
+
+                    message.style.display = "block";
+                    message.textContent =
+                        "Please enter email and password.";
+
+                    return;
+                }
+
+                message.style.display = "block";
+                message.textContent =
+                    "Login details received. Backend authentication will be connected soon.";
+
+            }
+        );
+
+    </script>
+
+</body>
+</html>
