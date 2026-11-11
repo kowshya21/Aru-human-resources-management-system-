@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Notifications - ARU HRMS</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #222;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar {
+            width: 240px;
+            background: #111827;
+            color: white;
+            padding: 25px 15px;
+            box-sizing: border-box;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h2 {
+            margin: 0;
+        }
+
+        .logo span {
+            color: #60a5fa;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-menu a {
+            color: #d1d5db;
+            text-decoration: none;
+            padding: 13px 15px;
+            border-radius: 8px;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .logout {
+            margin-top: 25px;
+            color: #f87171 !important;
+        }
+
+        /* MAIN */
+
+        .main {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .page-header p {
+            color: #6b7280;
+            margin-top: 7px;
+        }
+
+        .clear-btn {
+            border: none;
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 11px 17px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* NOTIFICATION CARD */
+
+        .notification-container {
+            max-width: 900px;
+        }
+
+        .notification-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+            border-left: 4px solid #2563eb;
+            transition: 0.2s;
+        }
+
+        .notification-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .notification-card.read {
+            opacity: 0.6;
+            border-left-color: #9ca3af;
+        }
+
+        .notification-icon {
+            width: 45px;
+            height: 45px;
+            min-width: 45px;
+            background: #dbeafe;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 21px;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-content h3 {
+            margin: 0 0 5px;
+            font-size: 16px;
+        }
+
+        .notification-content p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .notification-time {
+            color: #9ca3af;
+            font-size: 12px;
+            margin-top: 6px;
+        }
+
+        .notification-actions {
+            display: flex;
+            gap: 7px;
+        }
+
+        .action-btn {
+            border: none;
+            padding: 8px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .read-btn {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .delete-btn {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .empty-message {
+            background: white;
+            padding: 60px 20px;
+            text-align: center;
+            border-radius: 12px;
+            color: #6b7280;
+        }
+
+        .empty-message .icon {
+            font-size: 45px;
+            margin-bottom: 10px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            .layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 15px;
+            }
+
+            .nav-menu {
+                flex-direction: row;
+                overflow-x: auto;
+            }
+
+            .nav-menu a {
+                white-space: nowrap;
+            }
+
+            .main {
+                padding: 18px;
+            }
+
+            .page-header {
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .page-header h1 {
+                font-size: 24px;
+            }
+
+            .notification-card {
+                align-items: flex-start;
+            }
+
+            .notification-actions {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h2>ARU <span>HRMS</span></h2>
+        </div>
+
+        <nav class="nav-menu">
+
+            <a href="dashboard.html">
+                📊 Dashboard
+            </a>
+
+            <a href="employees.html">
+                👥 Employees
+            </a>
+
+            <a href="profile.html">
+                👤 Profile
+            </a>
+
+            <a href="notifications.html" class="active">
+                🔔 Notifications
+            </a>
+
+            <a href="index.html">
+                🏠 Home
+            </a>
+
+            <a href="login.html" class="logout">
+                🚪 Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>
+                    Notifications
+                </h1>
+
+                <p>
+                    Stay updated with your HR activities
+                </p>
+
+            </div>
+
+            <button
+                class="clear-btn"
+                onclick="clearAllNotifications()">
+
+                Clear All
+
+            </button>
+
+        </div>
+
+
+        <div
+            class="notification-container"
+            id="notificationContainer">
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    let notifications = JSON.parse(
+        localStorage.getItem("aruNotifications")
+    ) || [
+
+        {
+            id: 1,
+            icon: "👤",
+            title: "New Employee Registered",
+            message: "A new employee has been added to the HRMS system.",
+            time: "10 minutes ago",
+            read: false
+        },
+
+        {
+            id: 2,
+            icon: "📅",
+            title: "HR Meeting Scheduled",
+            message: "Monthly HR meeting has been scheduled for tomorrow.",
+            time: "2 hours ago",
+            read: false
+        },
+
+        {
+            id: 3,
+            icon: "📋",
+            title: "Profile Update Request",
+            message: "An employee has requested to update their profile.",
+            time: "Yesterday",
+            read: false
+        },
+
+        {
+            id: 4,
+            icon: "🎉",
+            title: "Leave Approved",
+            message: "Your leave request has been approved by HR.",
+            time: "2 days ago",
+            read: true
+        },
+
+        {
+            id: 5,
+            icon: "🔐",
+            title: "Password Updated",
+            message: "Your account password was successfully updated.",
+            time: "3 days ago",
+            read: true
+        }
+
+    ];
+
+
+    function saveNotifications() {
+
+        localStorage.setItem(
+            "aruNotifications",
+            JSON.stringify(notifications)
+        );
+
+    }
+
+
+    function displayNotifications() {
+
+        const container =
+            document.getElementById(
+                "notificationContainer"
+            );
+
+
+        container.innerHTML = "";
+
+
+        if (notifications.length === 0) {
+
+            container.innerHTML = `
+
+                <div class="empty-message">
+
+                    <div class="icon">
+                        🔔
+                    </div>
+
+                    <h3>
+                        No Notifications
+                    </h3>
+
+                    <p>
+                        You're all caught up!
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        notifications.forEach(function(notification) {
+
+            const readClass =
+                notification.read ? "read" : "";
+
+
+            const buttonText =
+                notification.read
+                ? "Unread"
+                : "Mark Read";
+
+
+            container.innerHTML += `
+
+                <div
+                    class="notification-card ${readClass}"
+                    id="notification-${notification.id}"
+                >
+
+                    <div class="notification-icon">
+                        ${notification.icon}
+                    </div>
+
+
+                    <div class="notification-content">
+
+                        <h3>
+                            ${notification.title}
+                        </h3>
+
+                        <p>
+                            ${notification.message}
+                        </p>
+
+                        <div class="notification-time">
+                            ${notification.time}
+                        </div>
+
+                    </div>
+
+
+                    <div class="notification-actions">
+
+                        <button
+                            class="action-btn read-btn"
+                            onclick="toggleRead(${notification.id})"
+                        >
+                            ${buttonText}
+                        </button>
+
+
+                        <button
+                            class="action-btn delete-btn"
+                            onclick="deleteNotification(${notification.id})"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        });
+
+    }
+
+
+    function toggleRead(id) {
+
+        notifications =
+            notifications.map(function(notification) {
+
+                if (notification.id === id) {
+
+                    notification.read =
+                        !notification.read;
+
+                }
+
+                return notification;
+
+            });
+
+
+        saveNotifications();
+
+        displayNotifications();
+
+    }
+
+
+    function deleteNotification(id) {
+
+        notifications =
+            notifications.filter(function(notification) {
+
+                return notification.id !== id;
+
+            });
+
+
+        saveNotifications();
+
+        displayNotifications();
+
+    }
+
+
+    function clearAllNotifications() {
+
+        if (notifications.length === 0) {
+
+            alert("There are no notifications.");
+
+            return;
+
+        }
+
+
+        const confirmClear =
+            confirm(
+                "Are you sure you want to clear all notifications?"
+            );
+
+
+        if (confirmClear) {
+
+            notifications = [];
+
+            saveNotifications();
+
+            displayNotifications();
+
+        }
+
+    }
+
+
+    displayNotifications();
+
+</script>
+
+</body>
+
+</html>
